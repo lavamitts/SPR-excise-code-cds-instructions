@@ -1,4 +1,9 @@
-# Add codes in CDS
+# Generates HTML includes for condition dialogs for SPR
+
+This generates:
+
+- an HTML include per excise code
+- a YAML file that associates the codes with the HTML fragments
 
 ## Implementation steps
 
@@ -13,4 +18,4 @@
 ## Usage
 
 ### To parse an existing electronic Tariff file:
-`python3 parse.py`
+`python3 process.py`

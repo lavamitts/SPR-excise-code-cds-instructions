@@ -20,13 +20,16 @@ class TaxType(object):
         self.eas_asv = row[12].value
         self.supp_unit = row[13].value
 
+        self.is_dr = True if "DR" in self.description else False
+        self.is_spr = True if "SPR" in self.description else False
+
     def apply_template(self, template, output_folder):
         self.output_folder = output_folder
         f = open(template, 'r')
         content = f.read()
 
         self.content = content.replace("{{excise_code}}", str(self.excise_code))
-        self.content = self.content.replace("{{description}}", str(self.description))
+        self.content = self.content.replace("{{description}}", str(self.description).strip())
         self.content = self.content.replace("{{rate}}", str(self.rate))
         self.content = self.content.replace("{{formula}}", str(self.formula))
         self.content = self.content.replace("{{tax_type}}", str(self.tax_type))
@@ -39,6 +42,7 @@ class TaxType(object):
         self.content = self.content.replace("{{eas_code}}", str(self.eas_code))
         self.content = self.content.replace("{{eas_asv}}", str(self.eas_asv))
         self.content = self.content.replace("{{supp_unit}}", str(self.supp_unit))
+        self.content = self.content.replace("ABV", "<abbr title='Percentage alcohol by volume'>ABV</abbr>")
 
         f.close()
         self.get_yaml()
@@ -46,7 +50,8 @@ class TaxType(object):
         self.copy()
 
     def write(self):
-        self.filename = "_small_producer_relief_{additional_code}.html".format(additional_code=self.additional_code)
+        # self.filename = "_small_producer_relief_{additional_code}.html".format(additional_code=self.additional_code)
+        self.filename = "_excise_code_{additional_code}.html".format(additional_code=self.additional_code)
         self.filepath = os.path.join(self.output_folder, self.filename)
         f = open(self.filepath, 'w')
         f.write(self.content)
@@ -60,6 +65,6 @@ class TaxType(object):
     def get_yaml(self):
         self.yaml = """- additional_code: 'X{tax_type}'
   measure_type_id: '306'
-  content_file: 'small_producer_relief_X{tax_type}'
+  content_file: 'excise_code_X{tax_type}'
   overwrite: false
 """.format(tax_type=self.tax_type)

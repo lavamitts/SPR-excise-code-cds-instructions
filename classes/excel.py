@@ -8,11 +8,16 @@ class Excel(object):
     def __init__(self):
         self.resources_folder = os.path.join(os.getcwd(), "resources")
         self.input_folder = os.path.join(self.resources_folder, "input")
+        self.template_folder = os.path.join(self.resources_folder, "templates")
         self.output_folder = os.path.join(self.resources_folder, "output")
-        self.yaml_path = os.path.join(self.output_folder, "yaml", "test.yaml")
+        self.yaml_path = os.path.join(self.output_folder, "yaml", "spr_and_dr_measure_condition_dialog_config.yaml")
 
         self.excel_source = os.path.join(self.input_folder, "Trader Declaration Data 3.xlsx")
-        self.template = os.path.join(self.input_folder, "template.html")
+
+        self.template_blank = os.path.join(self.template_folder, "template_blank.html")
+        self.template_dr = os.path.join(self.template_folder, "template_dr.html")
+        self.template_spr = os.path.join(self.template_folder, "template_spr.html")
+        self.template_spr_dr = os.path.join(self.template_folder, "template_spr_dr.html")
 
     def process_excel(self):
         self.yaml = "---\n"
@@ -22,7 +27,16 @@ class Excel(object):
         cell_range = ws['A1':'N49']
         for row in cell_range:
             tax_type = TaxType(row)
-            tax_type.apply_template(self.template, self.output_folder)
+
+            if tax_type.is_dr and tax_type.is_spr:
+                tax_type.apply_template(self.template_spr_dr, self.output_folder)
+            elif tax_type.is_dr:
+                tax_type.apply_template(self.template_dr, self.output_folder)
+            elif tax_type.is_spr:
+                tax_type.apply_template(self.template_spr, self.output_folder)
+            else:
+                tax_type.apply_template(self.template_blank, self.output_folder)
+
             self.tax_types.append(tax_type)
             self.yaml += tax_type.yaml
 

@@ -17,5 +17,5 @@ This generates:
 
 ## Usage
 
-### To parse an existing electronic Tariff file:
+### To process:
 `python3 process.py`

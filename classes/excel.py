@@ -10,7 +10,8 @@ class Excel(object):
         self.input_folder = os.path.join(self.resources_folder, "input")
         self.template_folder = os.path.join(self.resources_folder, "templates")
         self.output_folder = os.path.join(self.resources_folder, "output")
-        self.yaml_path = os.path.join(self.output_folder, "yaml", "spr_and_dr_measure_condition_dialog_config.yaml")
+        self.yaml_folder = os.path.join(self.output_folder, "yaml")
+        self.yaml_path = os.path.join(self.yaml_folder, "spr_and_dr_measure_condition_dialog_config.yaml")
 
         self.excel_source = os.path.join(self.input_folder, "Trader Declaration Data 3.xlsx")
 
@@ -18,6 +19,9 @@ class Excel(object):
         self.template_dr = os.path.join(self.template_folder, "template_dr.html")
         self.template_spr = os.path.join(self.template_folder, "template_spr.html")
         self.template_spr_dr = os.path.join(self.template_folder, "template_spr_dr.html")
+
+        os.makedirs(self.output_folder, exist_ok=True)
+        os.makedirs(self.yaml_folder, exist_ok=True)
 
     def process_excel(self):
         self.yaml = "---\n"

@@ -1,10 +1,12 @@
 import os
-import sys
+from dotenv import load_dotenv
 import shutil
 
 
 class TaxType(object):
     def __init__(self, row):
+        self.get_config()
+
         self.excise_code = row[0].value
         self.description = row[1].value
         self.rate = row[2].value
@@ -22,6 +24,10 @@ class TaxType(object):
 
         self.is_dr = True if "DR" in self.description else False
         self.is_spr = True if "SPR" in self.description else False
+
+    def get_config(self):
+        load_dotenv('.env')
+        self.prototype_folder = os.getenv('prototype_folder')
 
     def apply_template(self, template, output_folder):
         self.output_folder = output_folder
@@ -58,8 +64,7 @@ class TaxType(object):
         f.close()
 
     def copy(self):
-        dest = "/Users/MLavis.Admin/sites and projects/1. Online Tariff/01. prototypes/ott-prototype/app/views/spr_conditions"
-        dest = os.path.join(dest, self.filename)
+        dest = os.path.join(self.prototype_folder, self.filename)
         shutil.copy(self.filepath, dest)
 
     def get_yaml(self):

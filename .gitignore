@@ -107,23 +107,9 @@ venv.bak/
 .mypy_cache/
 
 __pycache__/
-csv/
 temp/
 .vscode/
 .DS_Store
-instructions.md
-data/excel/
-data/explore/
-data/icl_vme/
-data/in/
-data/out/
-specification/
-questions/
-data/reference/supplementary unit archive/
-data/reference/archive/
-comm_codes.txt
-aws_commands.md
 
-!_export/
-_export/*
-!_export/README.md
+resources/input/archive
+resources/output

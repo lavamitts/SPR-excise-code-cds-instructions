@@ -9,13 +9,13 @@ This generates:
 
 - Create and activate a virtual environment, e.g.
 
-  `python3 -m venv venv/`
+  `python -m venv venv/`
 
   `source venv/bin/activate`
 
-- Install necessary Python modules via `pip3 install -r requirements.txt`
+- Install necessary Python modules via `pip install -r requirements.txt`
 
 ## Usage
 
 ### To process:
-`python3 process.py`
+`python process.py`
